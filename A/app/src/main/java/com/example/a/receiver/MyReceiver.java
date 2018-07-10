@@ -1,11 +1,11 @@
-package com.example.a;
+package com.example.a.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.widget.Toast;
 
+import com.example.a.fragment.HistoryFragment;
+import com.example.a.activity.MainActivity;
 import com.example.a.room.Link;
 
 public class MyReceiver extends BroadcastReceiver {
@@ -14,10 +14,10 @@ public class MyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String imageURL = intent.getStringExtra("IMAGE_URL");
         int imageStatus = intent.getIntExtra("IMAGE_STATUS", 3);
-        int imageID = intent.getIntExtra("IMAGE_ID", -1);
-        String imageData = intent.getStringExtra("IMAGE_DATA");
+        String imageDate = intent.getStringExtra("IMAGE_DATE");
+        int imageID = MainActivity.linkDao.getAll().size();
 
-        Link link = new Link(imageID, imageURL, imageStatus, imageData);
+        Link link = new Link(imageID, imageURL, imageStatus, imageDate);
 
         MainActivity.linkDao.insert(link);
         HistoryFragment.getAll().add(link);

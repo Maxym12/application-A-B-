@@ -1,4 +1,4 @@
-package com.example.a;
+package com.example.a.adapter;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;

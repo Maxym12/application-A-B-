@@ -1,4 +1,4 @@
-package com.example.a;
+package com.example.a.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import com.example.a.R;
 
 public class TestFragment extends Fragment {
     private Button btnOk;
@@ -35,11 +32,9 @@ public class TestFragment extends Fragment {
         btnOk.setOnClickListener(e -> {
             Intent i = new Intent("com.example.b.MainActivity");
             i.putExtra("FROM", "OK");
-            i.putExtra("IMAGE_ID", MainActivity.linkDao.getAll().size());
             i.putExtra("IMAGE_LINK", link.getText().toString());
             startActivity(i);
         });
-
 
         return rootView;
     }

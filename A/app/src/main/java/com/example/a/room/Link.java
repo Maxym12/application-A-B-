@@ -14,7 +14,7 @@ public class Link {
 
     public int status;
 
-    public String data;
+    public String date;
 
     @Ignore
     public Link(String imageLink) {
@@ -28,11 +28,11 @@ public class Link {
         this.status = status;
     }
 
-    public Link(long id, String imageLink, int status, String data) {
+    public Link(long id, String imageLink, int status, String date) {
         this.id = id;
         this.imageLink = imageLink;
         this.status = status;
-        this.data = data;
+        this.date = date;
     }
 
     @Override

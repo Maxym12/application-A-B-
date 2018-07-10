@@ -1,4 +1,4 @@
-package com.example.a;
+package com.example.a.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.a.R;
 import com.example.a.room.Link;
 
 import java.util.ArrayList;
