@@ -14,15 +14,25 @@ public class Link {
 
     public int status;
 
+    public String data;
+
     @Ignore
     public Link(String imageLink) {
         this.imageLink = imageLink;
     }
 
+    @Ignore
     public Link(long id, String imageLink, int status) {
         this.id = id;
         this.imageLink = imageLink;
         this.status = status;
+    }
+
+    public Link(long id, String imageLink, int status, String data) {
+        this.id = id;
+        this.imageLink = imageLink;
+        this.status = status;
+        this.data = data;
     }
 
     @Override

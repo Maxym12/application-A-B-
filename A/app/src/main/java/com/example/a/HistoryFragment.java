@@ -38,15 +38,12 @@ public class HistoryFragment extends Fragment {
 
         syncDatabaseWithListView();
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent("com.example.b.MainActivity");
-                intent.putExtra("FROM", "HISTORY");
-                intent.putExtra("IMAGE_LINK", all.get(i).imageLink);
-                intent.putExtra("IMAGE_STATUS", all.get(i).status);
-                startActivity(intent);
-            }
+        lv.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = new Intent("com.example.b.MainActivity");
+            intent.putExtra("FROM", "HISTORY");
+            intent.putExtra("IMAGE_LINK", all.get(i).imageLink);
+            intent.putExtra("IMAGE_STATUS", all.get(i).status);
+            startActivity(intent);
         });
 
         return rootView;

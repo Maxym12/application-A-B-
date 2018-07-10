@@ -33,10 +33,6 @@ public class TestFragment extends Fragment {
         btnOk = rootView.findViewById(R.id.btnOk);
 
         btnOk.setOnClickListener(e -> {
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-            Date today = Calendar.getInstance().getTime();
-            String reportDate = df.format(today);
-
             Intent i = new Intent("com.example.b.MainActivity");
             i.putExtra("FROM", "OK");
             i.putExtra("IMAGE_ID", MainActivity.linkDao.getAll().size());

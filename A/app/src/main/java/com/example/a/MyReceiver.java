@@ -15,8 +15,9 @@ public class MyReceiver extends BroadcastReceiver {
         String imageURL = intent.getStringExtra("IMAGE_URL");
         int imageStatus = intent.getIntExtra("IMAGE_STATUS", 3);
         int imageID = intent.getIntExtra("IMAGE_ID", -1);
+        String imageData = intent.getStringExtra("IMAGE_DATA");
 
-        Link link = new Link(imageID, imageURL, imageStatus);
+        Link link = new Link(imageID, imageURL, imageStatus, imageData);
 
         MainActivity.linkDao.insert(link);
         HistoryFragment.getAll().add(link);
