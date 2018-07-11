@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private boolean sortByStatus = true;
     static LinkDao linkDao;
+    AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+        db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "database")
                 .allowMainThreadQueries()
                 .build();

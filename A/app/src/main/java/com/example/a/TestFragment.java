@@ -1,5 +1,6 @@
 package com.example.a;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -33,7 +35,7 @@ public class TestFragment extends Fragment {
         btnOk = rootView.findViewById(R.id.btnOk);
 
         btnOk.setOnClickListener(e -> {
-            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+            DateFormat df = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
             Date today = Calendar.getInstance().getTime();
             String reportDate = df.format(today);
 
@@ -41,10 +43,18 @@ public class TestFragment extends Fragment {
             i.putExtra("FROM", "OK");
             i.putExtra("IMAGE_ID", MainActivity.linkDao.getAll().size());
             i.putExtra("IMAGE_LINK", link.getText().toString());
-            startActivity(i);
+            try {
+                startActivity(i);
+            } catch (ActivityNotFoundException ex) {
+                showToast("Приложение B не установлено");
+            }
         });
 
 
         return rootView;
+    }
+
+    void showToast(String str) {
+        Toast.makeText(this.getContext(), str, Toast.LENGTH_SHORT).show();
     }
 }

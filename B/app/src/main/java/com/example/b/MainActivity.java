@@ -20,17 +20,17 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         if (b != null) {
-            if (b.getString("FROM").equals("OK")) {
-                int imageID = b.getInt("IMAGE_ID");
-                String imageURL = b.getString("IMAGE_LINK");
+            int imageID = b.getInt("IMAGE_ID");
+            String imageURL = b.getString("IMAGE_LINK");
+            ImageView imageView = findViewById(R.id.imageView);
 
+            if (b.getString("FROM").equals("OK")) {
                 intent = new Intent();
                 intent.setAction("sendToDatabase");
                 intent.putExtra("IMAGE_URL", imageURL);
                 intent.putExtra("IMAGE_ID", imageID);
                 intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
 
-                ImageView imageView = findViewById(R.id.imageView);
                 Picasso.get()
                         .load(imageURL)
                         .into(imageView, new Callback() {
@@ -47,10 +47,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
             } else {
-                String imageURL = b.getString("IMAGE_LINK");
                 int imageStatus = b.getInt("IMAGE_STATUS");
-
-                ImageView imageView = findViewById(R.id.imageView);
 
                 Picasso.get().load(imageURL).into(imageView);
 
