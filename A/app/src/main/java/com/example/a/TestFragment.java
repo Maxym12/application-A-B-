@@ -35,7 +35,7 @@ public class TestFragment extends Fragment {
         btnOk = rootView.findViewById(R.id.btnOk);
 
         btnOk.setOnClickListener(e -> {
-            DateFormat df = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             Date today = Calendar.getInstance().getTime();
             String reportDate = df.format(today);
 
