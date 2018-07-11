@@ -15,14 +15,12 @@ import com.example.a.adapter.ViewPagerAdapter;
 import com.example.a.fragment.HistoryFragment;
 import com.example.a.fragment.TestFragment;
 import com.example.a.room.AppDatabase;
-import com.example.a.room.Link;
 import com.example.a.room.LinkDao;
 
 import java.util.Collections;
-import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity {
-    public static LinkDao linkDao;
+    private static LinkDao linkDao;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private boolean sortByStatus = true;
@@ -60,26 +58,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (sortByStatus) {
-            if (viewPager.getCurrentItem() == 1) {
+        if (viewPager.getCurrentItem() == 1) {
+            if (sortByStatus) {
                 // sort by status
                 Collections.sort(HistoryFragment.getAll(), (link, link2) -> link.status - link2.status);
                 sortByStatus = false;
                 showToast("Отсортировано по статусу");
                 HistoryFragment.getMa().notifyDataSetChanged();
             } else {
-                showToast("Перейдите в Историю");
-            }
-        } else {
-            if (viewPager.getCurrentItem() == 1) {
                 // sort by data
                 Collections.sort(HistoryFragment.getAll(), (link, link2) -> compareDate(link.date, link2.date));
                 sortByStatus = true;
                 showToast("Отсортировано по дате");
                 HistoryFragment.getMa().notifyDataSetChanged();
-            } else {
-                showToast("Перейдите в Историю");
             }
+        } else {
+            showToast("Перейдите в Историю");
         }
 
         return super.onOptionsItemSelected(item);
@@ -103,10 +97,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showToast(String str) {
-        if (toast == null)
+        if (toast == null) {
             toast = Toast.makeText(MainActivity.this, null, Toast.LENGTH_SHORT);
+        }
         toast.setText(str);
         toast.show();
     }
 
+    public static LinkDao getLinkDao() {
+        return linkDao;
+    }
 }

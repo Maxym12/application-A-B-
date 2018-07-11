@@ -11,9 +11,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.b.R;
-import com.example.b.controller.LinkImageViewer;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -23,8 +20,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    Intent intent;
+    private Intent intent;
     private Bundle b;
+    private boolean flag;
 
     @Override
     protected void onStart() {
@@ -39,30 +37,52 @@ public class MainActivity extends AppCompatActivity {
 
                 intent = new Intent();
                 intent.setAction("sendToDatabase");
+                intent.putExtra("FOR", "INSERT");
                 intent.putExtra("IMAGE_URL", imageURL);
                 intent.putExtra("IMAGE_DATE", imageDate);
                 intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
 
                 new LinkImageViewer((ImageView) findViewById(R.id.imageView)).execute(imageURL);
             } else {
-                String imageURL = b.getString("IMAGE_LINK");
+                final String imageURL = b.getString("IMAGE_LINK");
                 int imageStatus = b.getInt("IMAGE_STATUS");
-
-                ImageView imageView = findViewById(R.id.imageView);
-
-                Picasso.get().load(imageURL).into(imageView);
+                int imageID = b.getInt("IMAGE_ID");
 
                 if (imageStatus == 1) {
+                    intent = new Intent();
+                    intent.setAction("sendToDatabase");
+                    intent.putExtra("FOR", "DELETE");
+                    intent.putExtra("IMAGE_ID", imageID);
+                    intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+
+                    flag = false;
+                    new LinkImageViewer2((ImageView) findViewById(R.id.imageView)).execute(imageURL);
+
                     new CountDownTimer(15000, 1000) {
 
                         public void onTick(long millisUntilFinished) {
                         }
 
                         public void onFinish() {
-                            showToast("CLOSED");
-                            finish();
+                            // save
+                            // the
+                            // image
+                            // here
+                            sendBroadcast(intent);
+                            showToast("Ссылка : " + imageURL + " была удалена");
                         }
                     }.start();
+                } else {
+                    intent = new Intent();
+                    intent.setAction("sendToDatabase");
+                    intent.putExtra("FOR", "UPDATE");
+                    intent.putExtra("IMAGE_ID", imageID);
+                    intent.putExtra("IMAGE_DATE", b.getString("IMAGE_DATE"));
+                    intent.putExtra("IMAGE_URL", b.getString("IMAGE_URL"));
+                    intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+
+                    flag = true;
+                    new LinkImageViewer2((ImageView) findViewById(R.id.imageView)).execute(imageURL);
                 }
             }
         } else {
@@ -77,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             this.bitmapImage = bitmapImage;
         }
 
+        @Override
         protected Bitmap doInBackground(String... urls) {
             String url = urls[0];
             Bitmap Image = null;
@@ -89,6 +110,35 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 intent.putExtra("IMAGE_STATUS", 2);
                 sendBroadcast(intent);
+            }
+            return Image;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bitmapImage.setImageBitmap(result);
+        }
+    }
+
+    class LinkImageViewer2 extends AsyncTask<String, Void, Bitmap> {
+        ImageView bitmapImage;
+
+        public LinkImageViewer2(ImageView bitmapImage) {
+            this.bitmapImage = bitmapImage;
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            String url = urls[0];
+            Bitmap Image = null;
+            try {
+                URL imageUrl = new URL(url);
+                InputStream inputStream = imageUrl.openStream();
+                Image = BitmapFactory.decodeStream(inputStream);
+                if (flag) {
+                    intent.putExtra("IMAGE_STATUS", 1);
+                    sendBroadcast(intent);
+                }
+            } catch (Exception e) {
             }
             return Image;
         }

@@ -8,7 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
 public class Link {
 
     @PrimaryKey
-    public long id;
+    public int id;
 
     public String imageLink;
 
@@ -17,22 +17,26 @@ public class Link {
     public String date;
 
     @Ignore
+    public static int lastID;
+
+    @Ignore
     public Link(String imageLink) {
         this.imageLink = imageLink;
     }
 
     @Ignore
-    public Link(long id, String imageLink, int status) {
+    public Link(int id, String imageLink, int status) {
         this.id = id;
         this.imageLink = imageLink;
         this.status = status;
     }
 
-    public Link(long id, String imageLink, int status, String date) {
+    public Link(int id, String imageLink, int status, String date) {
         this.id = id;
         this.imageLink = imageLink;
         this.status = status;
         this.date = date;
+        lastID = id;
     }
 
     @Override

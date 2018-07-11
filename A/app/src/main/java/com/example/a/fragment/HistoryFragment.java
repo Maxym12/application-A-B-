@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.a.adapter.CustomLinkAdapter;
 import com.example.a.R;
@@ -40,8 +41,10 @@ public class HistoryFragment extends Fragment {
         lv.setOnItemClickListener((adapterView, view, i, l) -> {
             Intent intent = new Intent("com.example.b.MainActivity");
             intent.putExtra("FROM", "HISTORY");
+            intent.putExtra("IMAGE_ID", all.get(i).id);
             intent.putExtra("IMAGE_LINK", all.get(i).imageLink);
             intent.putExtra("IMAGE_STATUS", all.get(i).status);
+            intent.putExtra("IMAGE_DATE", all.get(i).date);
             startActivity(intent);
         });
 
@@ -49,7 +52,7 @@ public class HistoryFragment extends Fragment {
     }
 
     private void syncDatabaseWithListView() {
-        for(Link temp : MainActivity.linkDao.getAll()) {
+        for(Link temp : MainActivity.getLinkDao().getAll()) {
             all.add(temp);
         }
         ma.notifyDataSetChanged();
@@ -63,4 +66,7 @@ public class HistoryFragment extends Fragment {
         return ma;
     }
 
+    public static ListView getLv() {
+        return lv;
+    }
 }

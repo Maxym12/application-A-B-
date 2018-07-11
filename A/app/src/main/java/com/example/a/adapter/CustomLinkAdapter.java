@@ -15,9 +15,6 @@ import com.example.a.room.Link;
 import java.util.ArrayList;
 
 public class CustomLinkAdapter extends ArrayAdapter<Link> {
-
-    private static final String TAG = "PersonListAdapter";
-
     private Context mContext;
     private int mResource;
 
@@ -29,28 +26,28 @@ public class CustomLinkAdapter extends ArrayAdapter<Link> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        long id = getItem(position).id;
         String imageLink = getItem(position).imageLink;
         int status = getItem(position).status;
-
-        Link contact = new Link(id, imageLink, status);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
-        TextView tvLink = (TextView) convertView.findViewById(R.id.textView);
+        TextView tvLink = convertView.findViewById(R.id.textView);
 
         tvLink.setText(imageLink);
 
         switch (status) {
             case 1:
-                convertView.setBackgroundColor(Color.GREEN);
+                convertView.setBackgroundColor(convertView.getResources().getColor(R.color.green));
+//                convertView.setBackgroundColor(Color.GREEN);
                 break;
             case 2:
-                convertView.setBackgroundColor(Color.RED);
+                convertView.setBackgroundColor(convertView.getResources().getColor(R.color.red));
+//                convertView.setBackgroundColor(Color.RED);
                 break;
             case 3:
-                convertView.setBackgroundColor(Color.GRAY);
+                convertView.setBackgroundColor(convertView.getResources().getColor(R.color.gray));
+//                convertView.setBackgroundColor(Color.GRAY);
                 break;
         }
 
