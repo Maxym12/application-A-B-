@@ -10,12 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.a.R;
+import com.example.a.activity.MainActivity;
 
 public class TestFragment extends Fragment {
     private Button btnOk;
     private EditText link;
+    private Toast toast;
 
     public TestFragment() {
     }
@@ -30,12 +33,24 @@ public class TestFragment extends Fragment {
         btnOk = rootView.findViewById(R.id.btnOk);
 
         btnOk.setOnClickListener(e -> {
-            Intent i = new Intent("com.example.b.MainActivity");
-            i.putExtra("FROM", "OK");
-            i.putExtra("IMAGE_LINK", link.getText().toString());
-            startActivity(i);
+            if (link.getText().toString().length() == 0) {
+                showToast("Заполните поле");
+            } else {
+                Intent i = new Intent("com.example.b.MainActivity");
+                i.putExtra("FROM", "OK");
+                i.putExtra("IMAGE_LINK", link.getText().toString());
+                startActivity(i);
+            }
         });
 
         return rootView;
+    }
+
+    public void showToast(String str) {
+        if (toast == null) {
+            toast = Toast.makeText(getContext(), null, Toast.LENGTH_SHORT);
+        }
+        toast.setText(str);
+        toast.show();
     }
 }
