@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         }
         for (int i = 0; i < 6; i++) {
             if (array3[i].compareTo(array4[i]) != 0) {
-                return array3[i].compareTo(array4[i]);
+                return array4[i].compareTo(array3[i]);
             }
         }
         return 0;

@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import com.example.a.R;
 import com.example.a.activity.MainActivity;
+import com.example.a.room.Link;
+
+import java.util.Collections;
 
 public class TestFragment extends Fragment {
     private Button btnOk;
@@ -33,8 +36,11 @@ public class TestFragment extends Fragment {
         btnOk = rootView.findViewById(R.id.btnOk);
 
         btnOk.setOnClickListener(e -> {
-            if (link.getText().toString().length() == 0) {
+            String url = link.getText().toString();
+            if (url.length() == 0) {
                 showToast("Заполните поле");
+            } else if (isInAllByLink(url)) {
+                showToast("Ссылка : " + url + " уже есть в базе");
             } else {
                 Intent i = new Intent("com.example.b.MainActivity");
                 i.putExtra("FROM", "OK");
@@ -52,5 +58,14 @@ public class TestFragment extends Fragment {
         }
         toast.setText(str);
         toast.show();
+    }
+
+    private boolean isInAllByLink(String url) {
+        for (Link temp : HistoryFragment.getAll()) {
+            if (temp.imageLink.equals(url)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

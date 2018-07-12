@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
+import android.os.health.TimerStat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,6 +27,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity {
     private Intent intent;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.setAction("sendToDatabase");
                     intent.putExtra("FOR", "DELETE");
                     intent.putExtra("IMAGE_ID", imageID);
+                    intent.putExtra("IMAGE_URL", imageURL);
                     intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
 
                     flag = false;

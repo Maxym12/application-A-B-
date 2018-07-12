@@ -19,18 +19,6 @@ public class Link {
     @Ignore
     public static int lastID;
 
-    @Ignore
-    public Link(String imageLink) {
-        this.imageLink = imageLink;
-    }
-
-    @Ignore
-    public Link(int id, String imageLink, int status) {
-        this.id = id;
-        this.imageLink = imageLink;
-        this.status = status;
-    }
-
     public Link(int id, String imageLink, int status, String date) {
         this.id = id;
         this.imageLink = imageLink;

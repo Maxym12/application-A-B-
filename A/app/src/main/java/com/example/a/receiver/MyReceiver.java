@@ -3,9 +3,11 @@ package com.example.a.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
-import com.example.a.fragment.HistoryFragment;
 import com.example.a.activity.MainActivity;
+import com.example.a.fragment.HistoryFragment;
 import com.example.a.room.Link;
 
 public class MyReceiver extends BroadcastReceiver {
@@ -21,7 +23,7 @@ public class MyReceiver extends BroadcastReceiver {
             Link link = new Link(imageID, imageURL, imageStatus, imageDate);
 
             MainActivity.getLinkDao().insert(link);
-            HistoryFragment.getAll().add(link);
+            HistoryFragment.getAll().add(0, link);
             HistoryFragment.getMa().notifyDataSetChanged();
         } else if (intent.getStringExtra("FOR").equals("UPDATE")) {
             int imageID = intent.getIntExtra("IMAGE_ID", -1);
@@ -36,9 +38,11 @@ public class MyReceiver extends BroadcastReceiver {
             HistoryFragment.getMa().notifyDataSetChanged();
         } else {
             int imageID = intent.getIntExtra("IMAGE_ID", -1);
+            String imageURL = intent.getStringExtra("IMAGE_URL");
 
             MainActivity.getLinkDao().deleteById(imageID);
             deleteFromAllById(imageID);
+            HistoryFragment.getOpenedLinks().remove(imageURL);
             HistoryFragment.getMa().notifyDataSetChanged();
         }
     }
