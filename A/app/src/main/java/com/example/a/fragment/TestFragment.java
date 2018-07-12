@@ -45,6 +45,7 @@ public class TestFragment extends Fragment {
                 Intent i = new Intent("com.example.b.MainActivity");
                 i.putExtra("FROM", "OK");
                 i.putExtra("IMAGE_LINK", link.getText().toString());
+                link.setText("");
                 startActivity(i);
             }
         });
